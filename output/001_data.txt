@@ -1,0 +1,49 @@
+Mostly exponential data with slight sinusoidal behavior.
+
+{2.55515, -0.949957, 0.954631, 0.0679626, 0.245159, 1.12318, \
+0.699812, 1.52914, 2.34221, 3.58785, 3.17743, 2.7699, 4.71294, \
+6.02167, 3.93996, 4.08095, 6.68862, 6.05735, 6.25545, 6.08665, \
+7.88001, 7.24107, 6.51588, 7.23453, 7.40073, 9.3045, 6.98213, \
+7.66584, 9.44697, 8.95585, 10.8473, 11.5192, 9.60572, 9.18079, \
+8.3529, 9.98033, 10.4711, 10.2755, 9.23861, 8.09191, 7.74405, 6.9308, \
+4.91696, 2.93346, 3.23637, 2.7633, 2.04864, 0.22554, -1.14621, \
+-1.23016, -3.53224, -3.44941, -6.5644, -8.14639, -10.7625, -15.3302, \
+-15.708, -17.414, -22.0694, -24.8501, -25.778, -27.903, -33.6655, \
+-34.5464, -38.3342, -40.446, -42.3715, -48.064, -49.6408, -52.1107, \
+-55.0438, -59.1118, -59.8071, -63.4763, -65.65, -67.7729, -68.3618, \
+-70.1269, -72.7763, -72.818, -73.053, -71.2798, -72.5041, -74.4879, \
+-71.3788, -67.8539, -64.7601, -63.2424, -60.3196, -55.7731, -48.3561, \
+-44.6445, -38.065, -30.4912, -22.268, -12.769, -2.52354, 7.4659, \
+18.5826, 34.8058}
+
+start = {-2.5, 1.5, -2.}
+
+SmoothingFunction[l_] := Total[MapIndexed[#1 /2.^First[#2] &, l]]/Smoothness;
+
+Fitfunction = #2*Exp[#1*#3]*Sin[#1*#4] &;
+
+errorRatio = 1.0;
+boostRatio = 1.1;
+refineRatio = 0.95;
+maxRefines = 1000;
+AccelBoost = 1.;
+AccelRefine = 1.;
+AccelAmt = 0.01;
+
+Varied smoothness and observed error over iterations, correction count, and final error
+
+In instances with smoothness = 2 or > 3, the gradient descent outperformed the prepackaged numerical minimization method.
+
+Error decreases more rapidly in the initial phases as smoothness increases,
+but final error is best at smoothness = 6.
+
+	The suspected mechanism is that the average at the beginning, since the dirs array is not filled, is essentially subjected to an even smaller "factor" than the actual variable factor is.
+
+	Since this is an exponential function with often high slopes, reducing the factor at early points can prevent overshooting and thus allow faster convergence.
+
+	However, the longer "memory" of previous gradients negatively impacts convergence speed.
+
+Corrections seem to vary and are not predictable.
+Overall they represent slightly more than half of all calculations.
+
+At the end, the file was saved as 001_final.nb and then renamed to general_adaptive_gradient.nb. The previous generalize_template.nb was put into the newly created folder "previous"
