@@ -38,3 +38,12 @@ The function fell into an incorrect location and refused to come out.
 			and then the algorithm is performed as usual.
 
 		On the final output function, DataMax is reinserted as the outermost coefficient.
+
+Somehow, using the Hessian doesn't work nicely at all...!?
+	See 003_hesse.png
+Anyhow, these parameters are causing some serious pain:
+Using normalization.
+	{9.03091, 6.9648, -6.23602}
+
+
+Normalization is ineffective.
