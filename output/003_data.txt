@@ -1,0 +1,40 @@
+Strangely non-convergent function
+
+I had implemented the frequency recovery method, but this seemingly simple function does not want to work for some reason.
+
+{3.6106, 3.61921, 3.62808, 3.63723, 3.64666, 3.65638, 3.66639, \
+3.67669, 3.68731, 3.69823, 3.70947, 3.72103, 3.73293, 3.74516, \
+3.75774, 3.77067, 3.78395, 3.79761, 3.81163, 3.82603, 3.84083, \
+3.85602, 3.87161, 3.88761, 3.90403, 3.92088, 3.93816, 3.95589, \
+3.97407, 3.99271, 4.01182, 4.03141, 4.05148, 4.07205, 4.09313, \
+4.11473, 4.13684, 4.1595, 4.18269, 4.20645, 4.23076, 4.25565, \
+4.28113, 4.3072, 4.33388, 4.36117, 4.3891, 4.41766, 4.44687, 4.47674, \
+4.50729, 4.53852, 4.57045, 4.60309, 4.63645, 4.67055, 4.70539, \
+4.74099, 4.77736, 4.81451, 4.85247, 4.89123, 4.93082, 4.97125, \
+5.01253, 5.05467, 5.0977, 5.14162, 5.18645, 5.23221, 5.2789, 5.32655, \
+5.37517, 5.42477, 5.47537, 5.52699, 5.57964, 5.63333, 5.6881, \
+5.74394, 5.80088, 5.85893, 5.91812, 5.97845, 6.03995, 6.10263, \
+6.16652, 6.23162, 6.29796, 6.36556, 6.43443, 6.50459, 6.57607, \
+6.64887, 6.72302, 6.79855, 6.87546, 6.95378, 7.03353, 7.11473}
+
+Fitfunction: Exp[#1*#3] Sin[#1*#2] + #4 &;
+TrueParams: {0.821353, 1.5682, 3.60226}
+Start: {RecoverFrequency[Data, DataLength, SamplingRate], 1., 0.629}
+
+Nevermind - upon restarting the iteration, it worked (?)
+
+Somewhat unexpected.
+
+(Currently, noise is all at zero.)
+
+With these trueparams:
+	{4.73575, 9.87798, -8.94354}
+
+The function fell into an incorrect location and refused to come out.
+	I attribute this to the lack of normalization performed on this data.
+	Now, I will put in normalization for data in this way:
+
+		Before the data is inserted, its maximum is found, extracted and recorded as DataMax,
+			and then the algorithm is performed as usual.
+
+		On the final output function, DataMax is reinserted as the outermost coefficient.

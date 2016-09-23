@@ -1,0 +1,45 @@
+More strongly sinusoidal data with noise of variance 1.
+
+The goal of this series of trials to overcome incorrect divergence at bifurcations between local convex spaces.
+	Strategies proposed:
+		Power spectrum scanning for non-convex parameter initialization
+		Reverse projection at sharp bends to set multiple points of descent
+			Reverse project when angle b/t NEXT DIR and PREV DIR are > threshold
+			Split when reverse projection error is also under current error
+			Merge two tracked points when distance is under another threshold
+				and their gradient angles are within another threshold
+
+
+{-1.07929, -0.639272, 0.975616, -1.72586, 0.105287, -1.96668, 1.9764, \
+0.487918, 2.00444, 0.347333, 1.60558, 0.47446, 2.14488, 0.730248, \
+0.253972, 1.58946, 2.18456, 1.99397, 3.15331, 2.29368, 1.56108, \
+0.851379, 2.99115, 3.03725, 1.69449, 3.57787, 1.37955, 2.56933, \
+2.87188, 1.65819, 2.68486, 1.95627, 1.98993, 0.269728, 2.58784, \
+3.10461, 1.60706, 1.50408, 2.9096, 2.71492, 2.54327, 2.80242, \
+2.70133, 1.90597, 2.07036, 2.47167, 1.74569, 1.77414, 0.661223, \
+0.303716, 2.42089, 1.092, 0.514481, 1.5765, 1.68512, -0.00117536, \
+-0.8868, 1.01438, 0.51587, -0.677712, -0.896855, -0.255712, 0.455213, \
+-0.378226, -2.02363, -1.62173, -0.594418, -3.06896, -2.73765, \
+-1.0767, -1.64371, -3.33942, -0.633837, -2.20569, -1.83145, -1.81214, \
+-2.65521, -2.52967, -2.78652, -3.23386, -2.46426, -1.10895, -2.33967, \
+-5.60805, -3.93347, -3.34036, -2.02212, -0.987, -2.46647, -3.76397, \
+-2.70117, -2.74629, -0.982725, -3.69938, -2.12828, -2.42987, \
+-4.49082, -2.66552, -0.418998, -1.51377}
+
+Fitfunction = #2*Exp[#1*#3*0.2]*Sin[#1*#4] &;
+
+SmoothingFunction[l_] := Total[MapIndexed[#1 /2.^First[#2] &, l]]/Smoothness;
+
+Start = {2.5, 1., FREQ}
+
+FREQ is the frequency coefficient.
+
+Tested with smoothness = 6:
+This exhibits bifurcation behavior:
+	LOWER RIGHT, DOWN (good)
+		< 3.712266645121...
+	UPPER RIGHT, DOWN (wrong)
+		> 3.712266645122...
+	UPPER RIGHT, UP (wrong)
+		> 3.73
+
