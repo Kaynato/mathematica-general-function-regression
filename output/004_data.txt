@@ -1,0 +1,16 @@
+004_data.txt
+
+Using the parameters : {6.57545, 5.1764, -7.75829}
+Using the fitfunction: Exp[#1*#3] (Sin[#1*#2] + Cos[#1*#4]) &
+Using the initialization: {RecoverDataFreq[], 2, RecoverDataFreq[]}
+
+I have made a more sensible derivation for BoostRatio and RefineRatio using Balance and Impatience such that:
+	Balance = BoostRatio * RefineRatio
+	Impatience = BoostRatio / RefineRatio
+
+004_pdf1c.pdf demonstrates the changing performance of the algorithm as it fits this curve.
+
+Now I will fit a composite sinusoid with Balance = 1.01 and Impatience = 1.18.
+
+Parameters: {13.1, 0.23, 25.23}
+
