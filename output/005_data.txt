@@ -26,3 +26,35 @@ expsin:
 
 		Re-implement kickback to ensure that error decreases!
 		Or just do the backtracking line search?
+
+
+	Params:
+		{4.72936, -3.42979, -1.40576}
+		The problem is that conj.grad doesn't ensure steepest descent.
+		
+		This is bad with periodic functions...
+		But extremely fast with polynomial and pure exponential.
+			Exppoly
+			Fitfunction = Exp[-#1*#3] + #1^2*#2 + #4 &;
+			(Within 5!! WITHIN 5 ITERATIONS.)
+
+			Exppoly2
+			Good
+
+		CJGRAD TROUBLES
+			Sinusoidal (explosive)
+			Anything without a constant term (presumably it affords a degree of freedom)
+
+		Good with
+			Arbitrary Degree Polynomials with a constant term
+			Exponentials (normalization is a possible cure)
+
+			normalization does not help to cure
+			Example of 
+			{2.338137629912179`, -1.68314106518711`, -2.241591949305569`}
+			Fitfunction = #3 Exp[#1*#2] + #4 &;
+
+		Extremely slow.
+			Does not seem to produce optimal results for some exponential functions if the starting location is not very close.
+
+		...Fixed: Adaptive tolerance on GRS.
