@@ -58,3 +58,63 @@ expsin:
 			Does not seem to produce optimal results for some exponential functions if the starting location is not very close.
 
 		...Fixed: Adaptive tolerance on GRS.
+			Some problems arose due to bugs but they were fixed soon enough.
+
+			Mathematica is dying on me.
+
+			After some adjustments to the GRS, this was improved as seen in 007_exp_acjg_001.pdf
+				Function really doesn't want to reverse concavity.
+
+				007_exp_acjg_002.pdf - resistance to concavity reversal
+				
+				But - in fact, this is a matter also of the normal negative gradient function.
+				See 007_exp_ngrad_002.pdf
+
+					There is a "wall" where the concavity of the exponential function is zero. Beware!
+
+
+		Concavity flipping test:
+			Fitfunction = Exp[#1*#2] + #3 &;
+
+		Divergence:
+			At high #2 it also has the risk of divergence.
+			Using the initial parameters {x, 7.} and varying x from 4 to 5 we can see where it begins to diverge on the parameter space.
+				See 007_exp_acjg_003.pdf for an example of overshoot		7.0
+				See 007_exp_acjg_004.pdf for an example of convergence		6.2
+
+		Some sinusoids:
+			007_sin_acjg_001.pdf
+			It is still very bad for sinusoids.
+				But that is what Fourier transforms are for - that is not the use case intended for this program.
+
+			007_sinexp_acjg_002.pdf - low freq decay
+			007_sinexp_acjg_003.pdf - low freq decay
+			007_sinexp_acjg_004.pdf - high freq decay
+				Good examples.
+			007_sinexp_acjg_005.pdf - high freq decay
+			007_sinexp_acjg_006.pdf - medium freq decay
+				Not so good, but overall it fits. The algorithm quickly stalls at a suboptimal distance.
+				Despite its relative speed in terms of iterations, it is very computationally expensive.
+				Compare:
+			007_sinexp_gag_006.pdf
+				General adaptive gradient developed earlier.
+				More robust - despite taking many more iterations, it ACHIEVES MORE IN LESS ACTUAL TIME.
+				Almost instantaneous compared to the acjg, and MUCH more reliable.
+
+		008_concavity_gag_001.pdf
+		008_concavity_acjg_001.pdf
+			Concavity flipping is a problem for everyone.
+		008_concavity_acjg_002.pdf
+			Under the right conditions, however, this has a decent span of convergence.
+			1.53298 seconds for 30 iterations.
+		008_concavity_gag_001.pdf
+			0.887821 seconds for 120 iterations.
+
+
+	Overall, the old method seems to actually perform more effectively.
+
+
+	The angular comparison method DOES NOT WORK.
+
+	I made a "pure conjugate gradient" without any additional modifiers.
+		It's faster and more effective.
