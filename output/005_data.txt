@@ -18,3 +18,11 @@ expsin:
 		Zigzagging observed on steepest part - bad behavior.
 
 	{-1.8843439074598045`, 1.7127700566735733`, -2.92633344958303`}
+
+
+
+	Start @ {RecoverDataFreq[2]/30, 1, -2.9}
+	Very strange. NLCJG.
+
+		Re-implement kickback to ensure that error decreases!
+		Or just do the backtracking line search?
