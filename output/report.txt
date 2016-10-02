@@ -1,0 +1,19 @@
+All generated with parameters:
+	InitFunctionData[5., {}, 0.2, NormalDistribution[1, 0.9], {}, {}];
+
+010_polyn_pcjg_...
+Polynomials (5, degrees 100, 100, 50, 20, 5):
+	Generated with random parameters.
+	Initialized position with random parameters.
+	Extremely good performance.
+
+Exponentials.
+	#4 Exp[#1 #2] + #3
+	Not normalized
+		010_exp_pcjg_...
+			Take care to start on the right concavity.
+			005 particularly is notable for making it through the concavity issue (though slowly) as the error plot shows also.
+
+Those with 50 data points were in 011.
+Combinations of cosine and sine is poor.
+Sums of sinusoidal and exponential were poor even with extraction of frequency to aid the initialization.
