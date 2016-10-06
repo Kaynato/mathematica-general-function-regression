@@ -17,3 +17,21 @@ Exponentials.
 Those with 50 data points were in 011.
 Combinations of cosine and sine is poor.
 Sums of sinusoidal and exponential were poor even with extraction of frequency to aid the initialization.
+
+Angular Method:
+
+	The angle method was obtained and an error surface was created.
+	The angular method has the risk of discontinuity when the length of the data or the input vector is zero.
+		This is patched with a piecewise definition, but this is not continuous either.
+
+	Because using a gradient here would not work very well, I will use the nelder-mead method.
+
+	== How to obtain an error surface:
+
+	We find d = cos(θ) by taking the dot product of the normalized vectors.
+		This gives us a range [-1, 1] where 1 is the target.
+		We can take 1-d to have a range [2, 0] where 0 is the target, but this surface is not nice.
+			See 012_a_osurf.pdf
+
+		
+
