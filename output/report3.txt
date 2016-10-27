@@ -1,0 +1,114 @@
+Using normalized least squares:
+
+	When the data is taken in, the norm of the data is extracted to DataN,
+	and the data itself is then divided by DataN and thus normalized.
+
+	We then fit to the normalized data, and scale back into the data by multiplying
+	the fitting function's projection at the time points by DataN.
+
+	https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-17_14-39-14.png
+	C: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-17_14-39-37.png
+	https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-17_14-42-08.png
+	D: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-17_14-42-44.png
+	E: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-17_14-44-14.png
+
+	The deviation was preserved.
+
+	C: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-17_14-40-45.png
+	D: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-17_14-43-22.png
+	E: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-17_14-44-32.png
+
+	It is seen that the rescaling can return the distribution to its correct range.
+
+	The parameters are chosen to fit the normalized data, and then the generated data is compared directly to the normalized data also. In this way we eliminate scaling artifacts and overshooting due to high slopes.
+
+
+However -
+
+	This is "fitting non-normalized generated data to normalized data."
+	This, then, is unacceptable for the shape objective function since the parameters
+		would tend to generate zero-valued data which would have maximal angle sharing with any data.
+
+	Fit according to Normalized Least Squares, then Rescale
+
+		https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_09-27-54.png
+
+Sinusoidal:
+
+	With SeedRandom[10] (so same data)
+
+	(HNLS: Fit non-normalized generated to normalized data)
+	(LS: Plain Least Squares)
+
+		SOF: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_12-50-34.png
+		NLS: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_12-51-46.png
+		HNLS: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_12-57-08.png
+		LS: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_12-57-45.png
+
+		We see SOF and NLSR are near-identical and perform better than both HNLS and LS.
+		LS is better than HNLS and the objective surface is nicer.
+
+		In general, the objective surfaces of SOF and NLSR are much better.
+
+	Objective function surfaces:
+		https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_12-55-21.png
+
+Exponential:
+
+	SeedRandom[11]
+	Params: {3, 2}
+
+		Normalized Generated -> Normalized Data (SOF)
+			https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_13-36-49.png
+			
+		Normalized Generated -> Normalized Data (NLS)
+			https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_13-36-04.png
+
+		Generated -> Normalized Data (HNLS)
+			https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_13-35-20.png
+			(At this point we see that this HNLS is not worth pursuing)
+
+		Generated -> Original Data (LS)
+			https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_13-33-12.png
+
+		We see the same behavior:
+			SOF and NLS outperform LS. HNLS is not worth speaking of.
+			The standard deviation is roughly the same.
+
+	However, the problem is that in BOTH SOF and NLS, extracting the parameters is complicated by the normalization and rescaling.
+
+
+Again:
+
+	SeedRandom[11]
+	Params: {-5, 0.5}
+
+		SOF: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_13-47-38.png
+		LS: https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_13-46-34.png
+
+		Once again, SOF and NLS fit well after rescale, but this makes extracting the parameters no easy task.
+			It would be possible to project according to the norm of the original sample:
+
+				https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_13-57-29.png
+				This gives us a factor by which to approach this.
+
+			Thus we can extract the proper fitting function even if the parameters are "skewed."
+
+			https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_14-04-10.png
+			https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_14-10-02.png
+			As shown above.
+
+		Objective function surfaces:
+			https://dl.dropboxusercontent.com/u/26075333/ShareX/2016/10/Mathematica_2016-10-19_14-10-33.png
+
+Again:
+
+	SeedRandom[15]
+
+
+
+Varying deviation
+Outliers
+Both
+
+	Combined functions (e.g. logistic function with sinusoidal component, damped 2nd order sys response)
